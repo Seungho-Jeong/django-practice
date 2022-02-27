@@ -1,0 +1,45 @@
+{% load bootstrap4 %}
+
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>Instagram / Post List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+    <form action="" method="get">
+        <input type="text" name="q" value="{{ q }} "/>
+        <input type="submit" value="검색" name="" id="" />
+    </form>
+
+    <table class="table table-bordered table-hover">
+        <tbody>
+            {% for post in post_list %}
+                <tr>
+                    <td>
+                        {{ post.pk }}
+                    </td>
+                    <td>
+                        {% if post.photo %}
+                            <img src="{{ post.photo.url }}" style="width: 100px;"/>
+                        {% else %}
+                            No Photo
+                        {% endif %}
+                    </td>
+                    <td>
+{#                        <a href="{% url 'instagram:post_detail' post.pk %}">#}
+                        <a href="{{ post.get_absolute_url }}">
+                            {{ post.message }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated %}
+        {% bootstrap_pagination page_obj size="small" justify_content="center"%}
+    {% endif %}
+</body>
+</html>
